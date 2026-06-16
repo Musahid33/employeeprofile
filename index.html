@@ -2,65 +2,27 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Safety Portal - QR</title>
+    <title>Redirecting...</title>
     <style>
-        * { margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
-        body { background:#f4f6f9; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; }
-        .card { background:#fff; width:90%; max-width:420px; padding:30px; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.15); text-align:center; }
-        .logo { width:140px; height:auto; margin-bottom:15px; }
-        h1 { color:#0056a6; font-size:24px; margin-bottom:8px; }
-        .subtitle { color:#666; margin-bottom:25px; font-size:14px; }
-        input { width:100%; padding:12px; border:1px solid #ccc; border-radius:8px; font-size:16px; text-transform: uppercase; }
-        button.search-btn { width:100%; padding:12px; margin-top:15px; border:none; border-radius:8px; background:#0056a6; color:#fff; font-size:16px; cursor:pointer; }
-        button.search-btn:hover { background:#004080; }
-        .footer { margin-top:20px; font-size:12px; color:#777; }
-        .loading { font-size:18px; color:#0056a6; font-weight:bold; display:none; }
+        body { background: #f4f6f9; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; color: #555; }
     </style>
 </head>
 <body>
+    <p>Loading profile...</p>
 
-<div class="card" id="mainCard">
-    <div id="searchArea">
-        <img src="https://drive.google.com/thumbnail?id=1wZorZzHUDAtyb860RFnEowOrGNwRP5mR&sz=w300" class="logo" alt="Company Logo">
-        <h1>Employee Search Portal</h1>
-        <p class="subtitle">Enter Employee ID to View Safety Profile</p>
-        <input type="text" id="empid" placeholder="Enter Employee ID (e.g. EMP001)" autocomplete="off">
-        <button class="search-btn" onclick="searchEmployee()">Search Profile</button>
-        <div class="footer">Safety Management System</div>
-    </div>
-    
-    <div id="loadingArea" class="loading">
-        ⏳ Loading Profile... Please wait...
-    </div>
-</div>
-
-<script>
-var globalUrl = "https://script.google.com/macros/s/AKfycbx3Pyel1QtuCxXbSg1i3FcXPvihTWzPeEP9TH7LrJRWLVLrcFBKOXz-3OBz5c4xYHzJPg/exec";
-
-window.onload = function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var qrEmpId = urlParams.get('id');
-    
-    if(qrEmpId) {
-        document.getElementById("searchArea").style.display = "none";
-        document.getElementById("loadingArea").style.display = "block";
-        window.location.href = globalUrl + "?id=" + encodeURIComponent(qrEmpId.toUpperCase());
-    }
-}
-
-function searchEmployee(){
-    var empid = document.getElementById("empid").value.trim().toUpperCase();
-    if(empid === ""){
-        alert("Please enter Employee ID");
-        return;
-    }
-    window.open(globalUrl + "?id=" + encodeURIComponent(empid), '_blank');
-    document.getElementById("empid").value = "";
-}
-
-document.getElementById("empid").addEventListener("keypress", function(e){
-    if(e.key === "Enter"){ searchEmployee(); }
-});
-</script>
+    <script>
+        var globalUrl = "https://script.google.com/macros/s/AKfycbx3Pyel1QtuCxXbSg1i3FcXPvihTWzPeEP9TH7LrJRWLVLrcFBKOXz-3OBz5c4xYHzJPg/exec";
+        
+        var urlParams = new URLSearchParams(window.location.search);
+        var qrEmpId = urlParams.get('id');
+        
+        if(qrEmpId) {
+            // .replace() method purane page ko history se hata kar turant redirect karta hai
+            window.location.replace(globalUrl + "?id=" + encodeURIComponent(qrEmpId.toUpperCase()));
+        } else {
+            // Agar ID na ho toh user ko manual search ke liye portal par roko
+            window.location.href = "https://musahid33.github.io/employeeprofile/search.html";
+        }
+    </script>
 </body>
 </html>
