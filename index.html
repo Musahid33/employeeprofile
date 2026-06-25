@@ -163,6 +163,7 @@
             align-items: center;
             gap: 6px;
             background: rgba(16, 185, 129, 0.1);
+            padding: 6px 166px;
             padding: 6px 16px;
             border-radius: 30px;
             border: 1px solid rgba(16, 185, 129, 0.2);
@@ -211,16 +212,14 @@
 
         .status-container {
             margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            display: block;
         }
 
         .status-text {
             font-size: 14px;
             font-weight: 600;
             color: var(--text-muted);
-            margin-bottom: 6px;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -232,7 +231,7 @@
             background: #e2e8f0;
             border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 8px;
+            margin-bottom: 16px;
         }
 
         .progress-bar {
@@ -243,11 +242,14 @@
             border-radius: 10px;
         }
 
+        /* Continuous text presentation blocks */
         .info-note {
             font-size: 12px;
             color: #64748b;
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.5;
+            display: block;
+            margin-bottom: 6px;
         }
 
         .custom-welcome-note {
@@ -255,7 +257,7 @@
             color: #4f46e5;
             font-weight: 600;
             letter-spacing: 0.3px;
-            margin-top: 4px;
+            display: block;
         }
 
         .footer-badge {
@@ -323,7 +325,7 @@
                 <div class="progress-bar" id="bar"></div>
             </div>
             
-            <!-- Dono lines permanently placed here to stay stuck -->
+            <!-- Exact text structure as requested -->
             <div class="info-note">
                 Establishing end-to-end encrypted link with ecosystem servers.
             </div>
@@ -376,7 +378,7 @@
             if (progress >= 100) {
                 clearInterval(interval);
                 
-                // Added a 2-second buffer delay so the user can see everything stuck comfortably
+                // Added 2 seconds intentional pause before final redirect
                 setTimeout(function() {
                     const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
                     window.location.replace(targetUrl);
