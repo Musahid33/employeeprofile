@@ -6,91 +6,117 @@
     <title>Employee Safety Profile Verification</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-blue: #0078d4; /* Microsoft Azure Blue */
+            --dark-slate: #1f2937;
+            --light-gray: #f3f4f6;
+            --emerald-green: #10b981;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
-            background-color: #f4f7fc;
+            background-color: #f8fafc;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
+        /* Executive Premium Card */
         .card {
             background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 51, 153, 0.06);
-            width: 400px;
-            padding: 35px 28px;
+            border-radius: 12px; /* Microsoft style clean sharp edges */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+            width: 410px;
+            padding: 40px 32px;
             text-align: center;
-            border: 1px solid rgba(0, 51, 153, 0.04);
+            border: 1px solid #e2e8f0;
             position: relative;
+            overflow: hidden;
         }
 
-        /* Company Logo Badge */
+        /* Top Accent Bar (TATA/Microsoft Enterprise Style) */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), #2563eb);
+        }
+
+        /* Company Header */
         .logo-container {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .logo-badge {
-            background: #003399;
-            color: white;
+            background: rgba(0, 120, 212, 0.08);
+            color: var(--primary-blue);
             font-weight: 700;
-            padding: 6px 16px;
-            border-radius: 30px;
+            padding: 6px 14px;
+            border-radius: 4px;
             display: inline-block;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 1.5px;
-            box-shadow: 0 4px 10px rgba(0, 51, 153, 0.15);
+            border: 1px solid rgba(0, 120, 212, 0.15);
         }
 
         h2 {
             color: #0f172a;
-            font-size: 19px;
+            font-size: 20px;
             margin-bottom: 6px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
         }
 
         .subtitle {
             color: #64748b;
             font-size: 11px;
-            letter-spacing: 1.2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             font-weight: 600;
         }
 
-        /* Professional Loader and Status Icon */
+        /* Center Animation Area */
         .icon-container {
             position: relative;
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px;
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 10px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .status-icon {
-            font-size: 56px;
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Modern Microsoft Style Thin Spinner */
+        .azure-spinner {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #e2e8f0;
+            border-top: 2px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            transition: all 0.4s ease;
         }
 
-        .icon-loading {
-            color: #003399;
-            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        .status-icon {
+            font-size: 64px;
+            display: none; /* Starting state hidden */
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .icon-success {
-            color: #10b981;
-            transform: scale(1.05);
-            filter: drop-shadow(0 4px 10px rgba(16, 185, 129, 0.2));
+            color: var(--emerald-green);
+            filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.15));
         }
 
         @keyframes spin {
@@ -98,21 +124,21 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Premium QR Verified Badge */
+        /* QR Verified Premium Badge */
         .qr-badge-container {
-            height: 40px; /* Layout shift ko rokne ke liye fixed height */
+            height: 42px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .qr-badge {
-            background: #ecfdf5;
-            color: #065f46;
-            border: 1px solid #a7f3d0;
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
             padding: 6px 16px;
-            border-radius: 30px;
+            border-radius: 4px;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.5px;
@@ -120,5 +146,267 @@
             align-items: center;
             gap: 6px;
             opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.6s cubic-bezier(0.34, 1
+            transform: scale(0.9);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .qr-badge.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Enterprise ID Slate Box */
+        .id-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 25px;
+            position: relative;
+            transition: all 0.5s ease;
+        }
+
+        /* Skeleton Loading Effect for Profile */
+        .skeleton-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: loading-shimmer 1.4s infinite;
+            border-radius: 6px;
+            z-index: 2;
+            transition: opacity 0.4s ease;
+        }
+
+        @keyframes loading-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .id-label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .id-value {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: 1px;
+        }
+
+        /* Premium Progress Tracker */
+        .progress-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        .progress-percentage {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .progress-container {
+            background: #e2e8f0;
+            border-radius: 2px;
+            height: 4px; /* Thin line layout common in Azure dashboards */
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--primary-blue);
+            height: 100%;
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Status Logs */
+        .status-text {
+            font-size: 13px;
+            color: #334155;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            height: 20px;
+        }
+
+        .sub-text {
+            font-size: 11.5px;
+            color: #64748b;
+            margin-bottom: 20px;
+            height: 18px;
+        }
+
+        /* Corporate Footer */
+        hr {
+            border: 0;
+            border-top: 1px solid #f1f5f9;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .footer-text i {
+            color: #94a3b8;
+        }
+
+        .created-by {
+            font-size: 9px;
+            color: #cbd5e1;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="logo-container">
+            <div class="logo-badge">EMVS</div>
+        </div>
+        <h2>Emvess Infraventures Pvt. Ltd.</h2>
+        <div class="subtitle">Employee Safety Profile</div>
+
+        <div class="icon-container">
+            <div id="azureSpinner" class="azure-spinner"></div>
+            <i id="statusIcon" class="fa-solid fa-circle-check status-icon"></i>
+        </div>
+
+        <div class="qr-badge-container">
+            <div id="qrBadge" class="qr-badge">
+                <i class="fa-solid fa-shield-check"></i> QR VERIFIED
+            </div>
+        </div>
+
+        <div class="id-box" id="idBox">
+            <div id="skeleton" class="skeleton-loader"></div>
+            <div class="id-label" id="idLabel">System Handshake...</div>
+            <div class="id-value" id="idValue">EMP001</div>
+        </div>
+
+        <div class="progress-wrapper">
+            <div class="progress-header">
+                <span class="progress-title">Secure Verification</span>
+                <span id="progressPercent" class="progress-percentage">0%</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="status-text" id="statusText">Initializing gateway...</div>
+        <div class="sub-text" id="subText">Please wait while establishing secure session.</div>
+
+        <hr>
+
+        <div class="footer-text">
+            <i class="fa-solid fa-shield-halved" style="font-size: 11px; color:#0078d4;"></i> EMVESS SYSTEM EHS SECURE NODE
+        </div>
+        <div class="created-by">Created By - Musahid</div>
+    </div>
+
+    <script>
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const azureSpinner = document.getElementById('azureSpinner');
+        const statusIcon = document.getElementById('statusIcon');
+        const statusText = document.getElementById('statusText');
+        const subText = document.getElementById('subText');
+        const qrBadge = document.getElementById('qrBadge');
+        const idLabel = document.getElementById('idLabel');
+        const idBox = document.getElementById('idBox');
+        const skeleton = document.getElementById('skeleton');
+
+        // Timeline Execution Framework
+
+        // Phase 1: Micro-Delay immediately after opening page (Profile Skeleton Shimmer active)
+        setTimeout(() => {
+            progressBar.style.width = '25%';
+            progressPercent.innerText = '25%';
+            statusText.innerText = 'Connecting to Cloud Directory...';
+            subText.innerText = 'Verifying security handshake protocols.';
+        }, 600);
+
+        // Phase 2: Middle-tier validations (1.8 Seconds)
+        setTimeout(() => {
+            progressBar.style.width = '60%';
+            progressPercent.innerText = '60%';
+            statusText.innerText = 'Checking EHS Incident Registry...';
+            subText.innerText = 'Cross-referencing real-time active safety logs.';
+        }, 2000);
+
+        // Phase 3: Final Authentication (3.4 Seconds)
+        setTimeout(() => {
+            progressBar.style.width = '85%';
+            progressPercent.innerText = '85%';
+            statusText.innerText = 'Generating Secure Cryptographic Token...';
+            subText.innerText = 'Assembling cloud dashboard parameters.';
+        }, 3400);
+
+        // Phase 4: Absolute verification completion at exactly 4.5 Seconds (4500ms)
+        setTimeout(() => {
+            // Remove Skeleton Shimmer from ID container
+            skeleton.style.opacity = '0';
+            setTimeout(() => skeleton.remove(), 400); // Completely clears from DOM
+
+            // Progress finishes & changes to emerald success green
+            progressBar.style.width = '100%';
+            progressBar.style.background = 'var(--emerald-green)';
+            progressPercent.innerText = '100%';
+            progressPercent.style.color = 'var(--emerald-green)';
+            
+            // Azure Spinner stops, hides, and Microsoft Smooth success icon appears
+            azureSpinner.style.display = 'none';
+            statusIcon.style.display = 'block';
+            statusIcon.classList.add('icon-success');
+            
+            // Pop-up the sharp QR Verified badge
+            qrBadge.classList.add('show');
+            
+            // Box transforms into active enterprise cleared state
+            idLabel.innerText = 'Verified Enterprise Identity';
+            idLabel.style.color = '#166534';
+            idBox.style.borderColor = '#bbf7d0';
+            idBox.style.background = '#f0fdf4';
+            
+            // Status logs completion text
+            statusText.innerHTML = 'Access Granted | Profile Synced';
+            subText.innerText = 'Secure interconnect active and authorized.';
+        }, 4500);
+    </script>
+</body>
+</html>
