@@ -24,7 +24,6 @@
         }
 
         body {
-            /* Light professional background with a soft gradient and subtle glow */
             background: radial-gradient(circle at 50% 50%, #e0e7ff 0%, #f1f5f9 100%);
             display: flex;
             justify-content: center;
@@ -57,7 +56,6 @@
             position: relative;
             width: 400px;
             max-width: 100%;
-            /* Bright premium white glass card */
             background: var(--card-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -148,12 +146,6 @@
             color: white;
             font-size: 38px;
             box-shadow: 0 6px 15px rgba(16, 185, 129, 0.2);
-            animation: pulseScale 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseScale {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
         }
 
         .verify-badge {
@@ -182,19 +174,6 @@
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        .id-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shimmer 2.5s infinite;
-        }
-
-        @keyframes shimmer {
-            100% { left: 100%; }
-        }
-
         .id-label {
             font-size: 12px;
             color: #64748b;
@@ -220,25 +199,7 @@
             font-weight: 600;
             color: var(--text-muted);
             margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 4px;
-        }
-
-        .progress-track {
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #2563eb, #3b82f6, #10b981);
-            background-size: 200% auto;
-            border-radius: 10px;
+            text-align: center;
         }
 
         .info-note {
@@ -281,9 +242,7 @@
 
     <div class="card">
         <div class="logo-container">
-            <img class="logo" 
-                 src="Emvs LOGO.jpg" 
-                 alt="Emvess Logo">
+            <img class="logo" src="Emvs LOGO.jpg" alt="Emvess Logo">
         </div>
 
         <div class="company">Emvess Infraventures Pvt. Ltd.</div>
@@ -303,19 +262,15 @@
 
         <div class="id-box">
             <div class="id-label">Verified Employee ID</div>
-            <div class="id-value" id="empid">Parsing...</div>
+            <div class="id-value" id="empid">Redirecting...</div>
         </div>
 
         <div class="status-container">
-            <div class="status-text">
-                <span id="status-phase">🔒 Initializing secure handshake...</span>
-                <span id="percent">0%</span>
-            </div>
-            <div class="progress-track">
-                <div class="progress-bar" id="bar"></div>
+            <div class="status-text" id="status-phase">
+                🚀 Redirecting to profile dashboard...
             </div>
             <div class="info-note">
-                Establishing end-to-end encrypted link with ecosystem servers.
+                Connecting securely with ecosystem servers.
             </div>
         </div>
 
@@ -330,43 +285,18 @@
     </div>
 
     <script>
+        // 1. URL se employee 'id' parameter nikalna
         const params = new URLSearchParams(window.location.search);
         const empId = params.get("id") || "EMP001";
+        
+        // 2. ID ko UI par turant display karna (agar kuch milliseconds ke liye page dikhe)
         document.getElementById("empid").textContent = empId;
 
-        let progress = 0;
-        const bar = document.getElementById("bar");
-        const percent = document.getElementById("percent");
-        const statusPhase = document.getElementById("status-phase");
-
-        const statusMessages = [
-            { threshold: 0, text: "🔒 Initializing secure link..." },
-            { threshold: 25, text: "🔍 Fetching identity signatures..." },
-            { threshold: 55, text: "⚙️ Validating EHS certifications..." },
-            { threshold: 80, text: "🚀 Compiling dashboard environment..." }
-        ];
-
-        const interval = setInterval(function() {
-            progress++;
-            
-            bar.style.width = progress + "%";
-            percent.textContent = progress + "%";
-
-            let textToShow = statusMessages[0].text;
-            for (let i = 0; i < statusMessages.length; i++) {
-                if (progress >= statusMessages[i].threshold) {
-                    textToShow = statusMessages[i].text;
-                }
-            }
-            statusPhase.textContent = textToShow;
-
-            if (progress >= 100) {
-                clearInterval(interval);
-                
-                const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
-                window.location.replace(targetUrl);
-            }
-        }, 25);
+        // 3. Google Apps Script ka final Target URL banana
+        const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
+        
+        // 4. INSTANT REDIRECT (Bina kisi delay ke)
+        window.location.replace(targetUrl);
     </script>
 </body>
 </html>
