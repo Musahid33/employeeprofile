@@ -16,232 +16,80 @@
             --card-border: rgba(255, 255, 255, 0.7);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
         body {
             background: radial-gradient(circle at 50% 50%, #e0e7ff 0%, #f1f5f9 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-            padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; overflow: hidden; padding: 20px;
         }
 
         .bg-glow {
-            position: absolute;
-            width: 350px;
-            height: 350px;
+            position: absolute; width: 350px; height: 350px;
             background: linear-gradient(45deg, #bfdbfe, #a7f3d0);
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.5;
-            z-index: 1;
-            top: 15%;
-            left: 20%;
-            animation: floatGlow 8s ease-in-out infinite alternate;
-        }
-
-        @keyframes floatGlow {
-            0% { transform: translateY(0px) scale(1); }
-            100% { transform: translateY(25px) scale(1.1); }
+            border-radius: 50%; filter: blur(80px); opacity: 0.5; z-index: 1;
         }
 
         .card {
-            position: relative;
-            width: 400px;
-            max-width: 100%;
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 40px 30px;
-            text-align: center;
+            position: relative; width: 400px; max-width: 100%;
+            background: var(--card-bg); backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border); border-radius: 24px;
+            padding: 40px 30px; text-align: center; z-index: 2;
             box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.1);
-            z-index: 2;
-            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(40px) scale(0.96); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        .logo { width: 95px; margin-bottom: 18px; }
+        .company { font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .title { font-size: 14px; font-weight: 600; color: #4f46e5; text-transform: uppercase; margin-bottom: 25px; }
+
+        .tick-inner { 
+            width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669);
+            display: flex; justify-content: center; align-items: center; color: white; font-size: 38px; margin: 0 auto 15px;
         }
 
-        .logo-container {
-            margin-bottom: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 50px;
-        }
+        .verify-badge { color: var(--accent-green); font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 25px; }
 
-        .logo {
-            width: 95px;
-            height: auto;
-            border-radius: 8px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-        }
+        .id-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 25px; }
+        .id-value { font-size: 26px; font-weight: 700; color: var(--text-dark); }
 
-        .company {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-dark);
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #4f46e5;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 25px;
-        }
-
-        .verification-wrapper {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 15px auto;
-        }
-
-        .tick-circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(16, 185, 129, 0.08);
-            border: 2px dashed rgba(16, 185, 129, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: rotateOuter 12s linear infinite;
-        }
-
-        @keyframes rotateOuter {
-            100% { transform: rotate(360deg); }
-        }
-
-        .tick-inner {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #10b981, #059669);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 38px;
-            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.2);
-            animation: pulseScale 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseScale {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
-        }
-
-        .verify-badge {
-            color: var(--accent-green);
-            font-weight: 700;
-            font-size: 15px;
-            letter-spacing: 2px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(16, 185, 129, 0.1);
-            padding: 6px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            margin-bottom: 25px;
-        }
-
-        .id-box {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .id-box::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: shimmer 2.5s infinite;
-        }
-
-        @keyframes shimmer {
-            100% { left: 100%; }
-        }
-
-        .id-label { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
-        .id-value { font-size: 26px; font-weight: 700; color: var(--text-dark); margin-top: 4px; }
-
-        .status-container { margin-top: 10px; display: block; }
-        .status-text { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; padding: 0 4px; }
+        .status-container { margin-top: 10px; }
+        .status-text { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between; }
         .progress-track { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #3b82f6, #10b981); background-size: 200% auto; border-radius: 10px; }
-        .info-note { font-size: 12px; color: #64748b; font-weight: 500; line-height: 1.5; margin-bottom: 6px; }
-        .custom-welcome-note { font-size: 13px; color: #4f46e5; font-weight: 600; }
-        .footer-badge { margin-top: 35px; padding-top: 20px; border-top: 1px solid #e2e8f0; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 12px; color: #64748b; font-weight: 600; }
-        .creator-credit { margin-top: 14px; font-size: 11px; color: #94a3b8; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); }
+
+        .info-note { font-size: 12px; color: #64748b; margin-bottom: 6px; }
+        
+        /* Blink Animation */
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .custom-welcome-note { font-size: 13px; color: #4f46e5; font-weight: 600; animation: blink 1.5s infinite; }
+        
+        .creator-credit { margin-top: 20px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 10px; }
     </style>
 </head>
 <body>
-
     <div class="bg-glow"></div>
-
     <div class="card">
-        <div class="logo-container">
-            <img class="logo" src="Emvs LOGO.jpg" alt="Emvess Logo">
-        </div>
-
+        <img class="logo" src="Emvs LOGO.jpg" alt="Logo">
         <div class="company">Emvess Infraventures Pvt. Ltd.</div>
         <div class="title">Employee Safety Profile</div>
-
-        <div class="verification-wrapper">
-            <div class="tick-circle"></div>
-            <div class="tick-inner">✓</div>
-        </div>
-
-        <span class="verify-badge">QR VERIFIED</span>
-
+        <div class="tick-inner">✓</div>
+        <div class="verify-badge">QR VERIFIED</div>
         <div class="id-box">
-            <div class="id-label">Verified Employee ID</div>
-            <div class="id-value" id="empid">Parsing...</div>
+            <div style="font-size: 12px; color: #64748b;">Verified Employee ID</div>
+            <div class="id-value" id="empid">EMP001</div>
         </div>
-
         <div class="status-container">
             <div class="status-text">
                 <span id="status-phase">🔒 Initializing...</span>
                 <span id="percent">0%</span>
             </div>
-            <div class="progress-track">
-                <div class="progress-bar" id="bar"></div>
-            </div>
-            <div class="info-note">Establishing end-to-end encrypted link with ecosystem servers.</div>
+            <div class="progress-track"><div class="progress-bar" id="bar"></div></div>
+            <div class="info-note">Establishing end-to-end encrypted link with ecosystem.</div>
             <div class="custom-welcome-note">😊 Please wait while we are opening your profile...</div>
+            <div class="creator-credit">
+                Emveess Safety Mngt. TSL Site | Created By- Musahid | © 2026
+            </div>
         </div>
-
-        <div class="footer-badge">
-            SECURE SYSTEM INTERCONNECT | EMVESS SYSTEM EHS
-        </div>
-
-        <div class="creator-credit">Created By - Musahid</div>
     </div>
 
     <script>
@@ -254,41 +102,21 @@
         const percent = document.getElementById("percent");
         const statusPhase = document.getElementById("status-phase");
 
-        const statusMessages = [
-            { threshold: 0, text: "🔒 Initializing secure handshake..." },
-            { threshold: 25, text: "🔍 Fetching identity signatures..." },
-            { threshold: 55, text: "⚙️ Validating EHS certifications..." },
-            { threshold: 90, text: "🚀 Compiling dashboard environment..." }
-        ];
-
         const interval = setInterval(function() {
-            // 95% tak normal loading
             if (progress < 95) {
                 progress++;
                 bar.style.width = progress + "%";
                 percent.textContent = progress + "%";
-
-                let textToShow = statusMessages[0].text;
-                for (let i = 0; i < statusMessages.length; i++) {
-                    if (progress >= statusMessages[i].threshold) {
-                        textToShow = statusMessages[i].text;
-                    }
-                }
-                statusPhase.textContent = textToShow;
-            } 
-            // 95% par stuck hona
-            else if (progress === 95) {
+                if(progress < 30) statusPhase.textContent = "🔒 Initializing secure handshake...";
+                else if(progress < 60) statusPhase.textContent = "🔍 Fetching identity signatures...";
+                else statusPhase.textContent = "🚀 Compiling dashboard environment...";
+            } else {
                 clearInterval(interval);
-                
-                // 2 seconds ka pause
-                setTimeout(function() {
+                setTimeout(() => {
                     progress = 100;
                     bar.style.width = "100%";
                     percent.textContent = "100%";
-                    
-                    // Redirect
-                    const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
-                    window.location.replace(targetUrl);
+                    window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
                 }, 2000);
             }
         }, 40);
