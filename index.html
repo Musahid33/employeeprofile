@@ -4,431 +4,369 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Safety Profile Verification</title>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-blue: #0078d4; /* Microsoft Azure Blue */
-            --dark-slate: #1f2937;
-            --light-gray: #f3f4f6;
-            --emerald-green: #10b981;
+            --primary-color: #f1f5f9;
+            --accent-green: #059669;
+            --accent-blue: #2563eb;
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.7);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         body {
-            background-color: #f8fafc;
+            /* Light professional background with a soft gradient and subtle glow */
+            background: radial-gradient(circle at 50% 50%, #e0e7ff 0%, #f1f5f9 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-        }
-
-        /* Executive Premium Card */
-        .card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-            width: 410px;
-            padding: 40px 32px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            position: relative;
             overflow: hidden;
+            padding: 20px;
         }
 
-        /* Top Accent Bar */
-        .card::before {
-            content: '';
+        .bg-glow {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-blue), #2563eb);
-        }
-
-        /* Company Header */
-        .logo-container {
-            margin-bottom: 20px;
-        }
-
-        .logo-badge {
-            background: rgba(0, 120, 212, 0.08);
-            color: var(--primary-blue);
-            font-weight: 700;
-            padding: 6px 14px;
-            border-radius: 4px;
-            display: inline-block;
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            border: 1px solid rgba(0, 120, 212, 0.15);
-        }
-
-        h2 {
-            color: #0f172a;
-            font-size: 20px;
-            margin-bottom: 6px;
-            font-weight: 600;
-            letter-spacing: -0.2px;
-        }
-
-        .subtitle {
-            color: #64748b;
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 35px;
-            font-weight: 600;
-        }
-
-        /* Center Animation Area */
-        .icon-container {
-            position: relative;
-            width: 85px;
-            height: 85px;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Modern Microsoft Style Thin Spinner */
-        .azure-spinner {
-            width: 60px;
-            height: 60px;
-            border: 2px solid #e2e8f0;
-            border-top: 2px solid var(--primary-blue);
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(45deg, #bfdbfe, #a7f3d0);
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            transition: all 0.4s ease;
+            filter: blur(80px);
+            opacity: 0.5;
+            z-index: 1;
+            top: 15%;
+            left: 20%;
+            animation: floatGlow 8s ease-in-out infinite alternate;
         }
 
-        .status-icon {
-            font-size: 64px;
+        @keyframes floatGlow {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(25px) scale(1.1); }
+        }
+
+        .card {
+            position: relative;
+            width: 400px;
+            max-width: 100%;
+            /* Bright premium white glass card */
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.1);
+            z-index: 2;
+            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .logo-container {
+            margin-bottom: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        .logo {
+            width: 95px;
+            height: auto;
+            border-radius: 8px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo:not([src]), .logo[src=""] {
             display: none;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .icon-success {
-            color: var(--emerald-green);
-            filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.15));
+        .company {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
+        .title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4f46e5;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+        }
+
+        .verification-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px auto;
+        }
+
+        .tick-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.08);
+            border: 2px dashed rgba(16, 185, 129, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotateOuter 12s linear infinite;
+        }
+
+        @keyframes rotateOuter {
             100% { transform: rotate(360deg); }
         }
 
-        /* QR Verified Premium Badge */
-        .qr-badge-container {
-            height: 42px;
+        .tick-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 15px;
+            color: white;
+            font-size: 38px;
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.2);
+            animation: pulseScale 2s ease-in-out infinite;
         }
 
-        .qr-badge {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-size: 11px;
+        @keyframes pulseScale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+        }
+
+        .verify-badge {
+            color: var(--accent-green);
             font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 15px;
+            letter-spacing: 2px;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            margin-bottom: 25px;
         }
 
-        .qr-badge.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Enterprise ID Slate Box */
         .id-box {
             background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
             padding: 16px;
             margin-bottom: 25px;
             position: relative;
-            transition: all 0.5s ease;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        /* Skeleton Loading Effect */
-        .skeleton-loader {
+        .id-box::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
-            background-size: 200% 100%;
-            animation: loading-shimmer 1.4s infinite;
-            border-radius: 6px;
-            z-index: 2;
-            transition: opacity 0.4s ease;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: shimmer 2.5s infinite;
         }
 
-        @keyframes loading-shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        @keyframes shimmer {
+            100% { left: 100%; }
         }
 
         .id-label {
-            font-size: 10px;
-            color: #94a3b8;
+            font-size: 12px;
+            color: #64748b;
             text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 4px;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            font-weight: 500;
         }
 
         .id-value {
-            font-size: 22px;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .status-container {
+            margin-top: 10px;
+        }
+
+        .status-text {
+            font-size: 14px;
             font-weight: 600;
-            color: #1e293b;
-            letter-spacing: 1px;
-        }
-
-        /* Premium Progress Tracker */
-        .progress-wrapper {
-            margin-bottom: 25px;
-        }
-
-        .progress-header {
+            color: var(--text-muted);
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
+            align-items: center;
+            padding: 0 4px;
         }
 
-        .progress-title {
-            font-size: 10px;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-        }
-
-        .progress-percentage {
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        .progress-container {
+        .progress-track {
+            height: 8px;
             background: #e2e8f0;
-            border-radius: 2px;
-            height: 4px;
-            width: 100%;
+            border-radius: 10px;
             overflow: hidden;
         }
 
         .progress-bar {
-            background: var(--primary-blue);
             height: 100%;
             width: 0%;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #2563eb, #3b82f6, #10b981);
+            background-size: 200% auto;
+            border-radius: 10px;
         }
 
-        /* Status Logs */
-        .status-text {
-            font-size: 13px;
-            color: #334155;
-            font-weight: 600;
-            margin-bottom: 6px;
+        .info-note {
+            margin-top: 16px;
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .footer-badge {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
-            height: 20px;
-        }
-
-        .sub-text {
-            font-size: 11.5px;
+            font-size: 12px;
             color: #64748b;
-            margin-bottom: 20px;
-            height: 18px;
-        }
-
-        /* Corporate Footer */
-        hr {
-            border: 0;
-            border-top: 1px solid #f1f5f9;
-            margin-bottom: 20px;
-        }
-
-        .footer-text {
-            font-size: 10px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .footer-text i {
-            color: #94a3b8;
-        }
-
-        .created-by {
-            font-size: 9px;
-            color: #cbd5e1;
-            margin-top: 6px;
             letter-spacing: 0.5px;
+        }
+
+        .footer-badge svg {
+            fill: #64748b;
+        }
+
+        .creator-credit {
+            margin-top: 14px;
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-glow"></div>
+
     <div class="card">
-        <!-- Enterprise Header -->
         <div class="logo-container">
-            <div class="logo-badge">EMVS</div>
-        </div>
-        <h2>Emvess Infraventures Pvt. Ltd.</h2>
-        <div class="subtitle">Employee Safety Profile</div>
-
-        <!-- Azure Spinner -->
-        <div class="icon-container">
-            <div id="azureSpinner" class="azure-spinner"></div>
-            <i id="statusIcon" class="fa-solid fa-circle-check status-icon"></i>
+            <img class="logo" 
+                 src="Emvs LOGO.jpg" 
+                 alt="Emvess Logo">
         </div>
 
-        <!-- QR Verified Container -->
-        <div class="qr-badge-container">
-            <div id="qrBadge" class="qr-badge">
-                <i class="fa-solid fa-shield-check"></i> QR VERIFIED
+        <div class="company">Emvess Infraventures Pvt. Ltd.</div>
+        <div class="title">Employee Safety Profile</div>
+
+        <div class="verification-wrapper">
+            <div class="tick-circle"></div>
+            <div class="tick-inner">✓</div>
+        </div>
+
+        <div>
+            <span class="verify-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.7l-3.61.81.34 3.68L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2 3.4-1.47 3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"/></svg>
+                QR VERIFIED
+            </span>
+        </div>
+
+        <div class="id-box">
+            <div class="id-label">Verified Employee ID</div>
+            <div class="id-value" id="empid">Parsing...</div>
+        </div>
+
+        <div class="status-container">
+            <div class="status-text">
+                <span id="status-phase">🔒 Initializing secure handshake...</span>
+                <span id="percent">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-bar" id="bar"></div>
+            </div>
+            <div class="info-note">
+                Establishing end-to-end encrypted link with ecosystem servers.
             </div>
         </div>
 
-        <!-- Dynamic ID Box with Shimmer -->
-        <div class="id-box" id="idBox">
-            <div id="skeleton" class="skeleton-loader"></div>
-            <div class="id-label" id="idLabel">System Handshake...</div>
-            <div class="id-value" id="idValue">---</div> <!-- URL se dynamic load hoga -->
+        <div class="footer-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            SECURE SYSTEM INTERCONNECT | EMVESS SYSTEM EHS
         </div>
 
-        <!-- Progress Bar -->
-        <div class="progress-wrapper">
-            <div class="progress-header">
-                <span class="progress-title">Secure Verification</span>
-                <span id="progressPercent" class="progress-percentage">0%</span>
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
+        <div class="creator-credit">
+            Created By - Musahid
         </div>
-
-        <!-- Dynamic Logs -->
-        <div class="status-text" id="statusText">Initializing gateway...</div>
-        <div class="sub-text" id="subText">Please wait while establishing secure session.</div>
-
-        <hr>
-
-        <!-- Footer -->
-        <div class="footer-text">
-            <i class="fa-solid fa-shield-halved" style="font-size: 11px; color:#0078d4;"></i> EMVESS SYSTEM EHS SECURE NODE
-        </div>
-        <div class="created-by">Created By - Musahid</div>
     </div>
 
-    <!-- Interface Logic Framework -->
     <script>
-        // --- DYNAMIC URL ID READER LOGIC ---
-        function getEmployeeCodeFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const empId = urlParams.get('id');
-            return empId ? empId.toUpperCase() : "EMP001"; // Agar link me id na ho toh default EMP001 dikhega
-        }
+        const params = new URLSearchParams(window.location.search);
+        const empId = params.get("id") || "EMP001";
+        document.getElementById("empid").textContent = empId;
 
-        // DOM Elements
-        const progressBar = document.getElementById('progressBar');
-        const progressPercent = document.getElementById('progressPercent');
-        const azureSpinner = document.getElementById('azureSpinner');
-        const statusIcon = document.getElementById('statusIcon');
-        const statusText = document.getElementById('statusText');
-        const subText = document.getElementById('subText');
-        const qrBadge = document.getElementById('qrBadge');
-        const idLabel = document.getElementById('idLabel');
-        const idBox = document.getElementById('idBox');
-        const skeleton = document.getElementById('skeleton');
-        const idValueDisplay = document.getElementById('idValue');
+        let progress = 0;
+        const bar = document.getElementById("bar");
+        const percent = document.getElementById("percent");
+        const statusPhase = document.getElementById("status-phase");
 
-        // Page khulte hi URL se dynamic Employee Code select karke HTML me inject karega
-        const activeEmployeeCode = getEmployeeCodeFromURL();
-        idValueDisplay.innerText = activeEmployeeCode;
+        const statusMessages = [
+            { threshold: 0, text: "🔒 Initializing secure link..." },
+            { threshold: 25, text: "🔍 Fetching identity signatures..." },
+            { threshold: 55, text: "⚙️ Validating EHS certifications..." },
+            { threshold: 80, text: "🚀 Compiling dashboard environment..." }
+        ];
 
-        // --- ANIMATION TIMELINE EXECUTION ---
-
-        // Phase 1: Immediate Load Stage (0.6 Sec)
-        setTimeout(() => {
-            progressBar.style.width = '25%';
-            progressPercent.innerText = '25%';
-            statusText.innerText = 'Connecting to Cloud Directory...';
-            subText.innerText = `Fetching credentials for cluster path node: ${activeEmployeeCode}`;
-        }, 600);
-
-        // Phase 2: Middle verification (2.0 Sec)
-        setTimeout(() => {
-            progressBar.style.width = '60%';
-            progressPercent.innerText = '60%';
-            statusText.innerText = 'Checking EHS Incident Registry...';
-            subText.innerText = 'Cross-referencing real-time active safety logs.';
-        }, 2000);
-
-        // Phase 3: Token Generation (3.4 Sec)
-        setTimeout(() => {
-            progressBar.style.width = '85%';
-            progressPercent.innerText = '85%';
-            statusText.innerText = 'Generating Secure Cryptographic Token...';
-            subText.innerText = 'Assembling cloud dashboard parameters.';
-        }, 3400);
-
-        // Phase 4: Verification successful at exactly 4.5 Seconds (4500ms)
-        setTimeout(() => {
-            // Remove Shimmer Animation
-            skeleton.style.opacity = '0';
-            setTimeout(() => skeleton.remove(), 400);
-
-            // Progress Bar finishes smoothly
-            progressBar.style.width = '100%';
-            progressBar.style.background = 'var(--emerald-green)';
-            progressPercent.innerText = '100%';
-            progressPercent.style.color = 'var(--emerald-green)';
+        const interval = setInterval(function() {
+            progress++;
             
-            // UI Transition (Spinner hides, Clean Success Check icon loads)
-            azureSpinner.style.display = 'none';
-            statusIcon.style.display = 'block';
-            statusIcon.classList.add('icon-success');
-            
-            // Pop-up QR Verified badge
-            qrBadge.classList.add('show');
-            
-            // Container change to Verified Emerald state
-            idLabel.innerText = 'Verified Enterprise Identity';
-            idLabel.style.color = '#166534';
-            idBox.style.borderColor = '#bbf7d0';
-            idBox.style.background = '#f0fdf4';
-            
-            // Verified Output Texts
-            statusText.innerHTML = 'Access Granted | Profile Synced';
-            subText.innerText = `EHS Token authorized for ${activeEmployeeCode}. Secure session active.`;
-        }, 4500);
+            bar.style.width = progress + "%";
+            percent.textContent = progress + "%";
+
+            let textToShow = statusMessages[0].text;
+            for (let i = 0; i < statusMessages.length; i++) {
+                if (progress >= statusMessages[i].threshold) {
+                    textToShow = statusMessages[i].text;
+                }
+            }
+            statusPhase.textContent = textToShow;
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                
+                const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
+                window.location.replace(targetUrl);
+            }
+        }, 25);
     </script>
 </body>
 </html>
