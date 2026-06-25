@@ -1,28 +1,172 @@
 <!DOCTYPE html>
-<html> 
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <style>
-        body { background: #f4f6f9; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; color: #555; }
-    </style>
-</head>
-<body>
-    <p>Loading profile...</p>
+<meta charset="UTF-8">
+<title>Employee Safety Profile</title>
 
-    <script>
-        var globalUrl = "https://script.google.com/macros/s/AKfycbx3Pyel1QtuCxXbSg1i3FcXPvihTWzPeEP9TH7LrJRWLVLrcFBKOXz-3OBz5c4xYHzJPg/exec";
-        
-        var urlParams = new URLSearchParams(window.location.search);
-        var qrEmpId = urlParams.get('id');
-        
-        if(qrEmpId) {
-            // .replace() method purane page ko history se hata kar turant redirect karta hai
-            window.location.replace(globalUrl + "?id=" + encodeURIComponent(qrEmpId.toUpperCase()));
-        } else {
-            // Agar ID na ho toh user ko manual search ke liye portal par roko
-            window.location.href = "https://musahid33.github.io/employeeprofile/search.html";
-        }
-    </script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#003366,#005792);
+
+height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.card{
+
+background:white;
+
+padding:45px;
+
+width:380px;
+
+border-radius:18px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+text-align:center;
+
+}
+
+.logo{
+
+width:80px;
+
+margin-bottom:20px;
+
+}
+
+.company{
+
+font-size:26px;
+
+font-weight:bold;
+
+color:#003366;
+
+margin-bottom:10px;
+
+}
+
+.title{
+
+font-size:22px;
+
+font-weight:600;
+
+color:#222;
+
+margin-bottom:25px;
+
+}
+
+.loader{
+
+width:70px;
+
+height:70px;
+
+border:6px solid #ddd;
+
+border-top:6px solid #007BFF;
+
+border-radius:50%;
+
+margin:auto;
+
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.loading{
+
+margin-top:25px;
+
+font-size:18px;
+
+font-weight:600;
+
+color:#444;
+
+}
+
+.wait{
+
+margin-top:10px;
+
+color:#888;
+
+font-size:14px;
+
+}
+
+</style>
+
+<script>
+
+setTimeout(function(){
+
+window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=EMP037");
+
+},2000);
+
+</script>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<!-- Company Logo -->
+<img src="logo.png" class="logo">
+
+<div class="company">
+Emvess Infraventures Pvt. Ltd.
+</div>
+
+<div class="title">
+Employee Safety Profile
+</div>
+
+<div class="loader"></div>
+
+<div class="loading">
+Loading...
+</div>
+
+<div class="wait">
+Please wait while your profile is being verified.
+</div>
+
+</div>
+
 </body>
 </html>
