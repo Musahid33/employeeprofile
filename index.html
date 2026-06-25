@@ -115,17 +115,17 @@
             else if (progress === 95) {
                 clearInterval(interval);
                 
-                // Final Success Message
+                // 100% hone par message update
+                progress = 100;
+                bar.style.width = "100%";
+                percent.textContent = "100%";
                 statusPhase.textContent = "✅ Verification Complete!";
                 welcomeNote.textContent = "😊 You are now entering your profile...";
                 welcomeNote.style.animation = "none";
                 welcomeNote.style.color = "#059669";
                 
+                // 2 second ka hold
                 setTimeout(() => {
-                    progress = 100;
-                    bar.style.width = "100%";
-                    percent.textContent = "100%";
-                    
                     window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
                 }, 2000);
             }
