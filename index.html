@@ -246,6 +246,15 @@
             font-weight: 500;
         }
 
+        /* New styling for your custom emoji and text below info-note */
+        .custom-welcome-note {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #4f46e5;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
         .footer-badge {
             margin-top: 35px;
             padding-top: 20px;
@@ -304,7 +313,7 @@
 
         <div class="status-container">
             <div class="status-text">
-                <span id="status-phase">😊 Please wait while we are opening your profile...</span>
+                <span id="status-phase">🔒 Initializing secure handshake...</span>
                 <span id="percent">0%</span>
             </div>
             <div class="progress-track">
@@ -312,6 +321,10 @@
             </div>
             <div class="info-note">
                 Establishing end-to-end encrypted link with ecosystem servers.
+            </div>
+            <!-- Added right under the info-note -->
+            <div class="custom-welcome-note">
+                😊 Please wait while we are opening your profile...
             </div>
         </div>
 
@@ -335,11 +348,12 @@
         const percent = document.getElementById("percent");
         const statusPhase = document.getElementById("status-phase");
 
+        // Dynamically changing technical logs inside the status text box
         const statusMessages = [
-            { threshold: 0, text: "😊 Please wait while we are opening your profile..." },
-            { threshold: 30, text: "🔍 Fetching identity signatures..." },
-            { threshold: 60, text: "⚙️ Validating EHS certifications..." },
-            { threshold: 85, text: "🚀 Compiling dashboard environment..." }
+            { threshold: 0, text: "🔒 Initializing secure handshake..." },
+            { threshold: 25, text: "🔍 Fetching identity signatures..." },
+            { threshold: 55, text: "⚙️ Validating EHS certifications..." },
+            { threshold: 80, text: "🚀 Compiling dashboard environment..." }
         ];
 
         const interval = setInterval(function() {
