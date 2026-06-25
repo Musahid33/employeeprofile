@@ -86,7 +86,7 @@
             <div class="info-note">Establishing end-to-end encrypted link with ecosystem.</div>
             <div class="custom-welcome-note">😊 Please wait while we are opening your profile...</div>
             <div class="creator-credit">
-                Emveess Safety Mngt.System - TSL Site | Created By- Musahid | © 2026
+                Emveess Safety Mngt. System - TSL Site | Created By- Musahid | © 2026
             </div>
         </div>
     </div>
@@ -103,7 +103,7 @@
         const welcomeNote = document.querySelector(".custom-welcome-note");
 
         const interval = setInterval(function() {
-            if (progress < 100) {
+            if (progress < 95) {
                 progress++;
                 bar.style.width = progress + "%";
                 percent.textContent = progress + "%";
@@ -115,19 +115,23 @@
             else if (progress === 95) {
                 clearInterval(interval);
                 
-                // 100% hone par message update
-                progress = 100;
-                bar.style.width = "100%";
-                percent.textContent = "100%";
-                statusPhase.textContent = "✅ Verification Complete!";
-                welcomeNote.textContent = "😊 You are now entering your profile...";
-                welcomeNote.style.animation = "none";
-                welcomeNote.style.color = "#059669";
-                
-                // 2 second ka hold
+                // 1.5 seconds ka pause 95% par
                 setTimeout(() => {
-                    window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
-                }, 400);
+                    progress = 100;
+                    bar.style.width = "100%";
+                    percent.textContent = "100%";
+                    
+                    // 100% par message update
+                    statusPhase.textContent = "✅ Verification Complete!";
+                    welcomeNote.textContent = "😊 You are now entering your profile...";
+                    welcomeNote.style.animation = "none";
+                    welcomeNote.style.color = "#059669";
+                    
+                    // 400ms ka final hold
+                    setTimeout(() => {
+                        window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
+                    }, 400);
+                }, 1500); 
             }
         }, 40);
     </script>
