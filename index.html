@@ -1,228 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Employee Safety Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Safety Profile Verification</title>
+    
+    <style>
+        :root {
+            --primary-color: #0f172a;
+            --accent-green: #10b981;
+            --accent-blue: #2563eb;
+            --text-light: #f8fafc;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+        }
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',Arial,sans-serif;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
 
-body{
-background:linear-gradient(135deg,#003366,#0066cc);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-overflow:hidden;
-}
+        body {
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+        }
 
-.card{
-width:380px;
-max-width:92%;
-background:#fff;
-border-radius:20px;
-padding:35px;
-text-align:center;
-box-shadow:0 15px 40px rgba(0,0,0,.3);
-animation:fade .8s;
-}
+        /* Ambient Background Decorative Circles */
+        .bg-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, var(--accent-blue), #4f46e5);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            z-index: 1;
+            top: 20%;
+            left: 25%;
+            animation: floatGlow 8s ease-in-out infinite alternate;
+        }
 
-@keyframes fade{
-from{opacity:0;transform:translateY(30px);}
-to{opacity:1;transform:translateY(0);}
-}
+        @keyframes floatGlow {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(20px) scale(1.1); }
+        }
 
-.logo{
-width:90px;
-margin-bottom:15px;
-}
+        /* Premium Glassmorphic Card */
+        .card {
+            position: relative;
+            width: 400px;
+            max-width: 100%;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-.company{
-font-size:24px;
-font-weight:bold;
-color:#003366;
-margin-bottom:5px;
-}
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
-.title{
-font-size:20px;
-font-weight:600;
-color:#444;
-margin-bottom:20px;
-}
+        .logo-container {
+            margin-bottom: 18px;
+        }
 
-.tick{
-width:90px;
-height:90px;
-border-radius:50%;
-background:#22c55e;
-display:flex;
-justify-content:center;
-align-items:center;
-margin:auto;
-color:white;
-font-size:48px;
-animation:pulse 1.2s infinite;
-}
+        .logo {
+            width: 95px;
+            height: auto;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
 
-@keyframes pulse{
-0%{transform:scale(1);}
-50%{transform:scale(1.08);}
-100%{transform:scale(1);}
-}
+        .company {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
 
-.verify{
-color:#22c55e;
-font-weight:bold;
-font-size:22px;
-margin:15px 0;
-}
+        .title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 25px;
+        }
 
-.idbox{
-background:#f5f8fc;
-border-radius:12px;
-padding:15px;
-margin:20px 0;
-}
+        /* Animated Elegant Verification Badge */
+        .verification-wrapper {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px auto;
+        }
 
-.idtitle{
-font-size:14px;
-color:#777;
-}
+        .tick-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px dashed rgba(16, 185, 129, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotateOuter 12s linear infinite;
+        }
 
-.id{
-font-size:30px;
-font-weight:bold;
-color:#005792;
-margin-top:5px;
-}
+        @keyframes rotateOuter {
+            100% { transform: rotate(360deg); }
+        }
 
-.fetch{
-font-size:17px;
-font-weight:600;
-margin-bottom:15px;
-color:#003366;
-}
+        .tick-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 38px;
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            animation: pulseScale 2s ease-in-out infinite;
+        }
 
-.progress{
-height:12px;
-background:#ddd;
-border-radius:20px;
-overflow:hidden;
-}
+        @keyframes pulseScale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); box-shadow: 0 12px 24px rgba(16, 185, 129, 0.4); }
+        }
 
-.bar{
-height:100%;
-width:0%;
-background:linear-gradient(90deg,#00c853,#00acc1);
-}
+        .verify-badge {
+            color: var(--accent-green);
+            font-weight: 700;
+            font-size: 15px;
+            letter-spacing: 2px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 6px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            margin-bottom: 25px;
+        }
 
-.percent{
-margin-top:12px;
-font-weight:bold;
-color:#003366;
-font-size:20px;
-}
+        /* Dynamic ID Container */
+        .id-box {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
 
-.loading{
-margin-top:15px;
-color:#666;
-}
+        .id-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            animation: shimmer 2.5s infinite;
+        }
 
-.footer{
-margin-top:25px;
-font-size:13px;
-color:#888;
-}
-</style>
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
 
+        .id-label {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .id-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Progress Status Section */
+        .status-container {
+            margin-top: 10px;
+        }
+
+        .status-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4px;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-blue), #3b82f6, var(--accent-green));
+            background-size: 200% auto;
+            border-radius: 10px;
+            transition: width 0.04s linear;
+        }
+
+        .info-note {
+            margin-top: 16px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* Secure System Card Footer */
+        .footer-badge {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .footer-badge svg {
+            fill: #475569;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="card">
+    <div class="bg-glow"></div>
 
-<img class="logo"
-src="https://drive.google.com/uc?export=view&id=1xymrOtXSB_ziOoMZolLJBj9pXKoyTC4I"
-alt="Company Logo">
+    <div class="card">
+        <div class="logo-container">
+            <img class="logo" 
+                 src="https://drive.google.com/uc?export=view&id=1xymrOtXSB_ziOoMZolLJBj9pXKoyTC4I" 
+                 alt="Emvess Logo">
+        </div>
 
-<div class="company">
-Emvess Infraventures Pvt. Ltd.
-</div>
+        <div class="company">Emvess Infraventures Pvt. Ltd.</div>
+        <div class="title">Employee Safety Profile</div>
 
-<div class="title">
-Employee Safety Profile
-</div>
+        <div class="verification-wrapper">
+            <div class="tick-circle"></div>
+            <div class="tick-inner">✓</div>
+        </div>
 
-<div class="tick">✓</div>
+        <div>
+            <span class="verify-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.7l-3.61.81.34 3.68L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2 3.4-1.47 3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"/></svg>
+                QR VERIFIED
+            </span>
+        </div>
 
-<div class="verify">
-QR VERIFIED
-</div>
+        <div class="id-box">
+            <div class="id-label">Verified Employee ID</div>
+            <div class="id-value" id="empid">Parsing...</div>
+        </div>
 
-<div class="idbox">
-<div class="idtitle">Employee ID</div>
-<div class="id" id="empid">Loading...</div>
-</div>
+        <div class="status-container">
+            <div class="status-text">
+                <span id="status-phase">🔒 Initializing secure handshake...</span>
+                <span id="percent">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-bar" id="bar"></div>
+            </div>
+            <div class="info-note">
+                Establishing end-to-end encrypted link with ecosystem servers.
+            </div>
+        </div>
 
-<div class="fetch">
-🔍 Fetching Employee Details...
-</div>
+        <div class="footer-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+            SECURE SYSTEM INTERCONNECT | EMVESS SYSTEM EHS
+        </div>
+    </div>
 
-<div class="progress">
-<div class="bar" id="bar"></div>
-</div>
+    <script>
+        // URL Parameter Processing
+        const params = new URLSearchParams(window.location.search);
+        const empId = params.get("id") || "EMP001";
+        document.getElementById("empid").textContent = empId;
 
-<div class="percent" id="percent">0%</div>
+        let progress = 0;
+        const bar = document.getElementById("bar");
+        const percent = document.getElementById("percent");
+        const statusPhase = document.getElementById("status-phase");
 
-<div class="loading">
-Please wait while your profile is being prepared...
-</div>
+        // Dynamic Loading Message States
+        const statusMessages = [
+            { threshold: 0, text: "🔒 Initializing secure link..." },
+            { threshold: 25, text: "🔍 Fetching identity signatures..." },
+            { threshold: 55, text: "⚙️ Validating EHS certifications..." },
+            { threshold: 80, text: "🚀 Compiling dashboard environment..." }
+        ];
 
-<div class="footer">
-🔒 Secure Connection | Your Safety is Our Priority
-</div>
+        const interval = setInterval(function() {
+            progress++;
+            
+            bar.style.width = progress + "%";
+            percent.textContent = progress + "%";
 
-</div>
+            // Status message updating based on milestone
+            const currentPhase = statusMessages.reduce((acc, msg) => {
+                return progress >= msg.threshold ? msg.text : acc;
+            }, statusMessages[0].text);
+            
+            statusPhase.textContent = currentPhase;
 
-<script>
-
-const params = new URLSearchParams(window.location.search);
-const empId = params.get("id") || "EMP001";
-
-document.getElementById("empid").textContent = empId;
-
-let progress = 0;
-
-const bar = document.getElementById("bar");
-const percent = document.getElementById("percent");
-
-const interval = setInterval(function(){
-
-progress++;
-
-bar.style.width = progress + "%";
-percent.textContent = progress + "%";
-
-if(progress >= 100){
-
-clearInterval(interval);
-
-window.location.replace(
-"https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId)
-);
-
-}
-
-},20);
-
-</script>
-
-</body>
-</html>
+            if (progress >= 100) {
+                clearInterval(interval);
+                
+                // Redirecting to target deployment deployment endpoint securely
+                const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?
