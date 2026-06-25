@@ -38,7 +38,7 @@
             box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.1);
         }
 
-        .logo { width: 95px; margin-bottom: 18px; }
+        .logo { width: 95px; margin-bottom: 18px; border-radius: 8px; }
         .company { font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
         .title { font-size: 14px; font-weight: 600; color: #4f46e5; text-transform: uppercase; margin-bottom: 25px; }
 
@@ -59,7 +59,6 @@
 
         .info-note { font-size: 12px; color: #64748b; margin-bottom: 6px; }
         
-        /* Blink Animation */
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         .custom-welcome-note { font-size: 13px; color: #4f46e5; font-weight: 600; animation: blink 1.5s infinite; }
         
@@ -101,21 +100,32 @@
         const bar = document.getElementById("bar");
         const percent = document.getElementById("percent");
         const statusPhase = document.getElementById("status-phase");
+        const welcomeNote = document.querySelector(".custom-welcome-note");
 
         const interval = setInterval(function() {
             if (progress < 95) {
                 progress++;
                 bar.style.width = progress + "%";
                 percent.textContent = progress + "%";
+                
                 if(progress < 30) statusPhase.textContent = "🔒 Initializing secure handshake...";
                 else if(progress < 60) statusPhase.textContent = "🔍 Fetching identity signatures...";
                 else statusPhase.textContent = "🚀 Compiling dashboard environment...";
-            } else {
+            } 
+            else if (progress === 95) {
                 clearInterval(interval);
+                
+                // Final Success Message
+                statusPhase.textContent = "✅ Verification Complete!";
+                welcomeNote.textContent = "😊 You are now entering your profile...";
+                welcomeNote.style.animation = "none";
+                welcomeNote.style.color = "#059669";
+                
                 setTimeout(() => {
                     progress = 100;
                     bar.style.width = "100%";
                     percent.textContent = "100%";
+                    
                     window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
                 }, 2000);
             }
