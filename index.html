@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Employee Safety Profile</title>
 
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Employee Safety Profile</title>
 
 <style>
 
@@ -12,12 +13,10 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Segoe UI,Arial,sans-serif;
+font-family:'Segoe UI',sans-serif;
 }
 
 body{
-
-background:linear-gradient(135deg,#003366,#005792);
 
 height:100vh;
 
@@ -27,15 +26,21 @@ justify-content:center;
 
 align-items:center;
 
+background:linear-gradient(135deg,#003366,#005792);
+
+overflow:hidden;
+
 }
 
 .card{
 
-background:white;
-
-padding:45px;
+background:#fff;
 
 width:380px;
+
+max-width:92%;
+
+padding:35px;
 
 border-radius:18px;
 
@@ -43,101 +48,197 @@ box-shadow:0 15px 40px rgba(0,0,0,.25);
 
 text-align:center;
 
+animation:fade .8s;
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
 }
 
 .logo{
 
-width:80px;
+width:90px;
 
-margin-bottom:20px;
+margin-bottom:15px;
 
 }
 
 .company{
 
-font-size:26px;
+font-size:23px;
 
 font-weight:bold;
 
 color:#003366;
 
-margin-bottom:10px;
+margin-bottom:6px;
 
 }
 
 .title{
 
-font-size:22px;
+font-size:21px;
 
 font-weight:600;
 
-color:#222;
+color:#333;
 
-margin-bottom:25px;
-
-}
-
-.loader{
-
-width:70px;
-
-height:70px;
-
-border:6px solid #ddd;
-
-border-top:6px solid #007BFF;
-
-border-radius:50%;
-
-margin:auto;
-
-animation:spin 1s linear infinite;
+margin-bottom:20px;
 
 }
 
-@keyframes spin{
+.check{
 
-100%{
+font-size:70px;
 
-transform:rotate(360deg);
+color:#22c55e;
+
+animation:pop .8s;
 
 }
+
+@keyframes pop{
+
+0%{transform:scale(0);}
+80%{transform:scale(1.2);}
+100%{transform:scale(1);}
+
+}
+
+.verify{
+
+font-size:22px;
+
+font-weight:bold;
+
+color:#22c55e;
+
+margin-top:8px;
+
+margin-bottom:20px;
+
+}
+
+.idbox{
+
+background:#f4f7fb;
+
+border-radius:12px;
+
+padding:15px;
+
+margin-bottom:20px;
+
+}
+
+.idtitle{
+
+font-size:14px;
+
+color:#666;
+
+}
+
+.id{
+
+font-size:32px;
+
+font-weight:bold;
+
+color:#005792;
+
+margin-top:5px;
+
+}
+
+.fetch{
+
+font-size:17px;
+
+font-weight:600;
+
+color:#003366;
+
+margin-bottom:15px;
+
+}
+
+.progress{
+
+width:100%;
+
+height:14px;
+
+background:#ddd;
+
+border-radius:20px;
+
+overflow:hidden;
+
+}
+
+.bar{
+
+height:100%;
+
+width:0%;
+
+background:linear-gradient(90deg,#00b894,#00cec9);
+
+transition:width .05s linear;
+
+}
+
+.percent{
+
+font-size:20px;
+
+font-weight:bold;
+
+margin-top:12px;
+
+color:#003366;
 
 }
 
 .loading{
 
-margin-top:25px;
+margin-top:20px;
 
 font-size:18px;
 
-font-weight:600;
-
-color:#444;
+color:#555;
 
 }
 
-.wait{
+.footer{
 
-margin-top:10px;
+margin-top:25px;
 
-color:#888;
+font-size:13px;
 
-font-size:14px;
+color:#777;
 
 }
 
 </style>
-
-<script>
-
-setTimeout(function(){
-
-window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=EMP037");
-
-},2000);
-
-</script>
 
 </head>
 
@@ -145,28 +246,116 @@ window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk8
 
 <div class="card">
 
-<!-- Company Logo -->
-<img src="logo.png" class="logo">
+<img class="logo"
+src="https://drive.google.com/uc?export=view&id=1xymrOtXSB_ziOoMZolLJBj9pXKoyTC4I">
 
 <div class="company">
+
 Emvess Infraventures Pvt. Ltd.
+
 </div>
 
 <div class="title">
+
 Employee Safety Profile
+
 </div>
 
-<div class="loader"></div>
+<div class="check">
+
+✔
+
+</div>
+
+<div class="verify">
+
+QR VERIFIED
+
+</div>
+
+<div class="idbox">
+
+<div class="idtitle">
+
+Employee ID
+
+</div>
+
+<div id="empid" class="id">
+
+Loading...
+
+</div>
+
+</div>
+
+<div class="fetch">
+
+🔍 Fetching Employee Details...
+
+</div>
+
+<div class="progress">
+
+<div class="bar" id="bar"></div>
+
+</div>
+
+<div class="percent" id="percent">
+
+0%
+
+</div>
 
 <div class="loading">
-Loading...
-</div>
 
-<div class="wait">
-Please wait while your profile is being verified.
-</div>
+Please wait...
 
 </div>
+
+<div class="footer">
+
+Your Safety is Our Priority
+
+</div>
+
+</div>
+
+<script>
+
+const params=new URLSearchParams(window.location.search);
+
+const id=params.get("id") || "EMP001";
+
+document.getElementById("empid").innerHTML=id;
+
+let p=0;
+
+const bar=document.getElementById("bar");
+
+const txt=document.getElementById("percent");
+
+const loading=setInterval(()=>{
+
+p++;
+
+bar.style.width=p+"%";
+
+txt.innerHTML=p+"%";
+
+if(p>=100){
+
+clearInterval(loading);
+
+window.location.href=
+
+"https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id="+id;
+
+}
+
+},20);
+
+</script>
 
 </body>
 </html>
