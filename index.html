@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Safety Profile Verification</title>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -31,7 +32,7 @@
         /* Executive Premium Card */
         .card {
             background: #ffffff;
-            border-radius: 12px; /* Microsoft style clean sharp edges */
+            border-radius: 12px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
             width: 410px;
             padding: 40px 32px;
@@ -41,7 +42,7 @@
             overflow: hidden;
         }
 
-        /* Top Accent Bar (TATA/Microsoft Enterprise Style) */
+        /* Top Accent Bar */
         .card::before {
             content: '';
             position: absolute;
@@ -110,7 +111,7 @@
 
         .status-icon {
             font-size: 64px;
-            display: none; /* Starting state hidden */
+            display: none;
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -166,7 +167,7 @@
             transition: all 0.5s ease;
         }
 
-        /* Skeleton Loading Effect for Profile */
+        /* Skeleton Loading Effect */
         .skeleton-loader {
             position: absolute;
             top: 0;
@@ -229,7 +230,7 @@
         .progress-container {
             background: #e2e8f0;
             border-radius: 2px;
-            height: 4px; /* Thin line layout common in Azure dashboards */
+            height: 4px;
             width: 100%;
             overflow: hidden;
         }
@@ -295,29 +296,34 @@
 <body>
 
     <div class="card">
+        <!-- Enterprise Header -->
         <div class="logo-container">
             <div class="logo-badge">EMVS</div>
         </div>
         <h2>Emvess Infraventures Pvt. Ltd.</h2>
         <div class="subtitle">Employee Safety Profile</div>
 
+        <!-- Azure Spinner -->
         <div class="icon-container">
             <div id="azureSpinner" class="azure-spinner"></div>
             <i id="statusIcon" class="fa-solid fa-circle-check status-icon"></i>
         </div>
 
+        <!-- QR Verified Container -->
         <div class="qr-badge-container">
             <div id="qrBadge" class="qr-badge">
                 <i class="fa-solid fa-shield-check"></i> QR VERIFIED
             </div>
         </div>
 
+        <!-- Dynamic ID Box with Shimmer -->
         <div class="id-box" id="idBox">
             <div id="skeleton" class="skeleton-loader"></div>
             <div class="id-label" id="idLabel">System Handshake...</div>
-            <div class="id-value" id="idValue">EMP001</div>
+            <div class="id-value" id="idValue">---</div> <!-- URL se dynamic load hoga -->
         </div>
 
+        <!-- Progress Bar -->
         <div class="progress-wrapper">
             <div class="progress-header">
                 <span class="progress-title">Secure Verification</span>
@@ -328,18 +334,29 @@
             </div>
         </div>
 
+        <!-- Dynamic Logs -->
         <div class="status-text" id="statusText">Initializing gateway...</div>
         <div class="sub-text" id="subText">Please wait while establishing secure session.</div>
 
         <hr>
 
+        <!-- Footer -->
         <div class="footer-text">
             <i class="fa-solid fa-shield-halved" style="font-size: 11px; color:#0078d4;"></i> EMVESS SYSTEM EHS SECURE NODE
         </div>
         <div class="created-by">Created By - Musahid</div>
     </div>
 
+    <!-- Interface Logic Framework -->
     <script>
+        // --- DYNAMIC URL ID READER LOGIC ---
+        function getEmployeeCodeFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const empId = urlParams.get('id');
+            return empId ? empId.toUpperCase() : "EMP001"; // Agar link me id na ho toh default EMP001 dikhega
+        }
+
+        // DOM Elements
         const progressBar = document.getElementById('progressBar');
         const progressPercent = document.getElementById('progressPercent');
         const azureSpinner = document.getElementById('azureSpinner');
@@ -350,18 +367,23 @@
         const idLabel = document.getElementById('idLabel');
         const idBox = document.getElementById('idBox');
         const skeleton = document.getElementById('skeleton');
+        const idValueDisplay = document.getElementById('idValue');
 
-        // Timeline Execution Framework
+        // Page khulte hi URL se dynamic Employee Code select karke HTML me inject karega
+        const activeEmployeeCode = getEmployeeCodeFromURL();
+        idValueDisplay.innerText = activeEmployeeCode;
 
-        // Phase 1: Micro-Delay immediately after opening page (Profile Skeleton Shimmer active)
+        // --- ANIMATION TIMELINE EXECUTION ---
+
+        // Phase 1: Immediate Load Stage (0.6 Sec)
         setTimeout(() => {
             progressBar.style.width = '25%';
             progressPercent.innerText = '25%';
             statusText.innerText = 'Connecting to Cloud Directory...';
-            subText.innerText = 'Verifying security handshake protocols.';
+            subText.innerText = `Fetching credentials for cluster path node: ${activeEmployeeCode}`;
         }, 600);
 
-        // Phase 2: Middle-tier validations (1.8 Seconds)
+        // Phase 2: Middle verification (2.0 Sec)
         setTimeout(() => {
             progressBar.style.width = '60%';
             progressPercent.innerText = '60%';
@@ -369,7 +391,7 @@
             subText.innerText = 'Cross-referencing real-time active safety logs.';
         }, 2000);
 
-        // Phase 3: Final Authentication (3.4 Seconds)
+        // Phase 3: Token Generation (3.4 Sec)
         setTimeout(() => {
             progressBar.style.width = '85%';
             progressPercent.innerText = '85%';
@@ -377,35 +399,35 @@
             subText.innerText = 'Assembling cloud dashboard parameters.';
         }, 3400);
 
-        // Phase 4: Absolute verification completion at exactly 4.5 Seconds (4500ms)
+        // Phase 4: Verification successful at exactly 4.5 Seconds (4500ms)
         setTimeout(() => {
-            // Remove Skeleton Shimmer from ID container
+            // Remove Shimmer Animation
             skeleton.style.opacity = '0';
-            setTimeout(() => skeleton.remove(), 400); // Completely clears from DOM
+            setTimeout(() => skeleton.remove(), 400);
 
-            // Progress finishes & changes to emerald success green
+            // Progress Bar finishes smoothly
             progressBar.style.width = '100%';
             progressBar.style.background = 'var(--emerald-green)';
             progressPercent.innerText = '100%';
             progressPercent.style.color = 'var(--emerald-green)';
             
-            // Azure Spinner stops, hides, and Microsoft Smooth success icon appears
+            // UI Transition (Spinner hides, Clean Success Check icon loads)
             azureSpinner.style.display = 'none';
             statusIcon.style.display = 'block';
             statusIcon.classList.add('icon-success');
             
-            // Pop-up the sharp QR Verified badge
+            // Pop-up QR Verified badge
             qrBadge.classList.add('show');
             
-            // Box transforms into active enterprise cleared state
+            // Container change to Verified Emerald state
             idLabel.innerText = 'Verified Enterprise Identity';
             idLabel.style.color = '#166534';
             idBox.style.borderColor = '#bbf7d0';
             idBox.style.background = '#f0fdf4';
             
-            // Status logs completion text
+            // Verified Output Texts
             statusText.innerHTML = 'Access Granted | Profile Synced';
-            subText.innerText = 'Secure interconnect active and authorized.';
+            subText.innerText = `EHS Token authorized for ${activeEmployeeCode}. Secure session active.`;
         }, 4500);
     </script>
 </body>
