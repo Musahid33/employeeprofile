@@ -93,43 +93,45 @@
 
     <script>
         const params = new URLSearchParams(window.location.search);
-        const empId = params.get("id") || "EMP001";
-        document.getElementById("empid").textContent = empId;
+    const empId = params.get("id") || "EMP001";
+    document.getElementById("empid").textContent = empId;
 
-        let progress = 0;
-        const bar = document.getElementById("bar");
-        const percent = document.getElementById("percent");
-        const statusPhase = document.getElementById("status-phase");
-        const welcomeNote = document.querySelector(".custom-welcome-note");
+    const bar = document.getElementById("bar");
+    const percent = document.getElementById("percent");
+    const statusPhase = document.getElementById("status-phase");
+    const welcomeNote = document.querySelector(".custom-welcome-note");
 
-        const interval = setInterval(function() {
-            if (progress < 95) {
-                progress++;
-                bar.style.width = progress + "%";
-                percent.textContent = progress + "%";
-                
-                if(progress < 30) statusPhase.textContent = "🔒 Initializing secure handshake...";
-                else if(progress < 60) statusPhase.textContent = "🔍 Fetching identity signatures...";
-                else statusPhase.textContent = "🚀 Compiling dashboard environment...";
-            } 
-            else if (progress === 95) {
-                clearInterval(interval);
-                
-                // 100% hone par message update
-                progress = 100;
-                bar.style.width = "100%";
-                percent.textContent = "100%";
-                statusPhase.textContent = "✅ Verification Complete!";
-                welcomeNote.textContent = "😊 You are now entering your profile...";
-                welcomeNote.style.animation = "none";
-                welcomeNote.style.color = "#059669";
-                
-                // 2 second ka hold
-                setTimeout(() => {
-                    window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
-                }, 400);
-            }
-        }, 40);
+    // 1. Loading effect ko chalaye rakhein jab tak request pending hai
+    let progress = 0;
+    const interval = setInterval(() => {
+        if (progress < 90) {
+            progress += Math.random() * 5; // Slow growth
+            if (progress > 90) progress = 90;
+            bar.style.width = progress + "%";
+            percent.textContent = Math.floor(progress) + "%";
+        }
+    }, 200);
+
+    // 2. Parallel mein Google Script call karein
+    const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
+
+    fetch(targetUrl, { mode: 'no-cors' }) // background mein call karein
+        .then(() => {
+            // 3. Jaise hi background call finish ho
+            clearInterval(interval);
+            bar.style.width = "100%";
+            percent.textContent = "100%";
+            statusPhase.textContent = "✅ Verification Complete!";
+            welcomeNote.textContent = "😊 Redirecting to your profile...";
+            welcomeNote.style.color = "#059669";
+            
+            // Redirect
+            window.location.replace(targetUrl);
+        })
+        .catch(err => {
+            console.error("Error:", err);
+            statusPhase.textContent = "⚠️ Connection Error";
+        });
     </script>
 </body>
 </html>
