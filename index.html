@@ -55,7 +55,7 @@
         .status-container { margin-top: 10px; }
         .status-text { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between; }
         .progress-track { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); transition: width 0.3s ease; }
 
         .info-note { font-size: 12px; color: #64748b; margin-bottom: 6px; }
         
@@ -101,18 +101,30 @@
         const statusPhase = document.getElementById("status-phase");
         const welcomeNote = document.querySelector(".custom-welcome-note");
 
-        // 1. Loading effect
         let progress = 0;
         const interval = setInterval(() => {
             if (progress < 90) {
-                progress += Math.random() * 5;
+                progress += Math.random() * 3;
                 if (progress > 90) progress = 90;
+                
                 bar.style.width = progress + "%";
                 percent.textContent = Math.floor(progress) + "%";
-            }
-        }, 200);
 
-        // 2. Parallel Google Script execution
+                // Dynamic Status Messages
+                if (progress < 20) {
+                    statusPhase.textContent = "🔒 Initializing secure handshake...";
+                } else if (progress < 40) {
+                    statusPhase.textContent = "🔍 Fetching employee database...";
+                } else if (progress < 60) {
+                    statusPhase.textContent = "🛡️ Validating credentials...";
+                } else if (progress < 80) {
+                    statusPhase.textContent = "🔗 Establishing encrypted link...";
+                } else {
+                    statusPhase.textContent = "🚀 Finalizing profile access...";
+                }
+            }
+        }, 300);
+
         const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
 
         fetch(targetUrl, { mode: 'no-cors' })
@@ -125,14 +137,15 @@
                 welcomeNote.style.color = "#059669";
                 welcomeNote.style.animation = "none";
                 
-                // 400ms ka delay
                 setTimeout(() => {
                     window.location.replace(targetUrl);
                 }, 400);
             })
             .catch(err => {
+                clearInterval(interval);
                 console.error("Error:", err);
-                statusPhase.textContent = "⚠️ Connection Error";
+                statusPhase.textContent = "⚠️ Connection Failed";
+                welcomeNote.textContent = "❌ Please check your internet connection.";
             });
     </script>
 </body>
