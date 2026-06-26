@@ -9,8 +9,11 @@
         :root {
             --primary-color: #f1f5f9;
             --accent-green: #059669;
+            --accent-blue: #2563eb;
             --text-dark: #0f172a;
             --text-muted: #475569;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(255, 255, 255, 0.7);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
@@ -18,71 +21,115 @@
         body {
             background: radial-gradient(circle at 50% 50%, #e0e7ff 0%, #f1f5f9 100%);
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; padding: 20px;
+            min-height: 100vh; overflow: hidden; padding: 20px;
+        }
+
+        .bg-glow {
+            position: absolute; width: 350px; height: 350px;
+            background: linear-gradient(45deg, #bfdbfe, #a7f3d0);
+            border-radius: 50%; filter: blur(80px); opacity: 0.5; z-index: 1;
         }
 
         .card {
-            width: 400px; max-width: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 24px; padding: 40px 30px; text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative; width: 400px; max-width: 100%;
+            background: var(--card-bg); backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border); border-radius: 24px;
+            padding: 40px 30px; text-align: center; z-index: 2;
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.1);
         }
 
         .logo { width: 95px; margin-bottom: 18px; border-radius: 8px; }
-        .company { font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 25px; }
-        .progress-track { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 15px; }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); transition: width 0.1s linear; }
+        .company { font-size: 22px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+        .title { font-size: 14px; font-weight: 600; color: #4f46e5; text-transform: uppercase; margin-bottom: 25px; }
+
+        .tick-inner { 
+            width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669);
+            display: flex; justify-content: center; align-items: center; color: white; font-size: 38px; margin: 0 auto 15px;
+        }
+
+        .verify-badge { color: var(--accent-green); font-weight: 700; background: rgba(16, 185, 129, 0.1); padding: 6px 16px; border-radius: 30px; display: inline-block; margin-bottom: 25px; }
+
+        .id-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 25px; }
+        .id-value { font-size: 26px; font-weight: 700; color: var(--text-dark); }
+
+        .status-container { margin-top: 10px; }
+        .status-text { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between; }
+        .progress-track { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); }
+
+        .info-note { font-size: 12px; color: #64748b; margin-bottom: 6px; }
         
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         .custom-welcome-note { font-size: 13px; color: #4f46e5; font-weight: 600; animation: blink 1.5s infinite; }
+        
         .creator-credit { margin-top: 20px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 10px; }
     </style>
 </head>
 <body>
+    <div class="bg-glow"></div>
     <div class="card">
         <img class="logo" src="Emvs LOGO.jpg" alt="Logo">
         <div class="company">Emvess Infraventures Pvt. Ltd.</div>
-        <div class="progress-track"><div class="progress-bar" id="bar"></div></div>
-        <div id="status-phase" style="font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 10px;">Initializing...</div>
-        <div class="custom-welcome-note" id="welcome-note">😊 Please wait while we are opening your profile...</div>
-        <div class="creator-credit">Emveess Safety Mngt. System - TSL Site | Created By- Musahid | © 2026</div>
+        <div class="title">Employee Safety Profile</div>
+        <div class="tick-inner">✓</div>
+        <div class="verify-badge">QR VERIFIED</div>
+        <div class="id-box">
+            <div style="font-size: 12px; color: #64748b;">Verified Employee ID</div>
+            <div class="id-value" id="empid">EMP001</div>
+        </div>
+        <div class="status-container">
+            <div class="status-text">
+                <span id="status-phase">🔒 Initializing...</span>
+                <span id="percent">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-bar" id="bar"></div></div>
+            <div class="info-note">Establishing end-to-end encrypted link with ecosystem.</div>
+            <div class="custom-welcome-note">😊 Please wait while we are opening your profile...</div>
+            <div class="creator-credit">
+                Emveess Safety Mngt. TSL Site | Created By- Musahid | © 2026
+            </div>
+        </div>
     </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
         const empId = params.get("id") || "EMP001";
-        
+        document.getElementById("empid").textContent = empId;
+
         let progress = 0;
         const bar = document.getElementById("bar");
+        const percent = document.getElementById("percent");
         const statusPhase = document.getElementById("status-phase");
-        const welcomeNote = document.getElementById("welcome-note");
+        const welcomeNote = document.querySelector(".custom-welcome-note");
 
-        function updateProgress() {
+        const interval = setInterval(function() {
             if (progress < 95) {
                 progress++;
                 bar.style.width = progress + "%";
-                statusPhase.textContent = "Loading... " + progress + "%";
-                setTimeout(updateProgress, 40);
-            } else if (progress === 95) {
-                // 95% par rukna
-                statusPhase.textContent = "Validating...";
+                percent.textContent = progress + "%";
+                
+                if(progress < 30) statusPhase.textContent = "🔒 Initializing secure handshake...";
+                else if(progress < 60) statusPhase.textContent = "🔍 Fetching identity signatures...";
+                else statusPhase.textContent = "🚀 Compiling dashboard environment...";
+            } 
+            else if (progress === 95) {
+                clearInterval(interval);
+                
+                // 100% hone par message update
+                progress = 100;
+                bar.style.width = "100%";
+                percent.textContent = "100%";
+                statusPhase.textContent = "✅ Verification Complete!";
+                welcomeNote.textContent = "😊 You are now entering your profile...";
+                welcomeNote.style.animation = "none";
+                welcomeNote.style.color = "#059669";
+                
+                // 2 second ka hold
                 setTimeout(() => {
-                    progress = 100;
-                    bar.style.width = "100%";
-                    statusPhase.textContent = "✅ Verification Complete!";
-                    welcomeNote.textContent = "😊 You are now entering your profile...";
-                    welcomeNote.style.animation = "none";
-                    welcomeNote.style.color = "#059669";
-                    
-                    // 400ms ke baad redirect
-                    setTimeout(() => {
-                        window.location.href = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
-                    }, 400);
-                }, 1500); // 95% par 1.5 second ka hold
+                    window.location.replace("https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId));
+                }, 2000);
             }
-        }
-
-        updateProgress();
+        }, 40);
     </script>
 </body>
 </html>
