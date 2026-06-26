@@ -55,7 +55,7 @@
         .status-container { margin-top: 10px; }
         .status-text { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px; display: flex; justify-content: space-between; }
         .progress-track { height: 8px; background: #e2e8f0; border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
-        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); transition: width 0.3s ease; }
+        .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #2563eb, #10b981); transition: width 0.4s ease-in-out; }
 
         .info-note { font-size: 12px; color: #64748b; margin-bottom: 6px; }
         
@@ -102,33 +102,32 @@
         const welcomeNote = document.querySelector(".custom-welcome-note");
 
         let progress = 0;
-        const interval = setInterval(() => {
-            if (progress < 90) {
-                progress += Math.random() * 3;
-                if (progress > 90) progress = 90;
-                
-                bar.style.width = progress + "%";
-                percent.textContent = Math.floor(progress) + "%";
+        
+        // Define phases for smooth transition
+        const phases = [
+            { p: 15, msg: "🔒 Initializing secure handshake..." },
+            { p: 35, msg: "🔍 Fetching employee database..." },
+            { p: 60, msg: "🛡️ Validating credentials..." },
+            { p: 80, msg: "🔗 Establishing encrypted link..." },
+            { p: 90, msg: "🚀 Finalizing profile access..." }
+        ];
 
-                // Dynamic Status Messages
-                if (progress < 20) {
-                    statusPhase.textContent = "🔒 Initializing secure handshake...";
-                } else if (progress < 40) {
-                    statusPhase.textContent = "🔍 Fetching employee database...";
-                } else if (progress < 60) {
-                    statusPhase.textContent = "🛡️ Validating credentials...";
-                } else if (progress < 80) {
-                    statusPhase.textContent = "🔗 Establishing encrypted link...";
-                } else {
-                    statusPhase.textContent = "🚀 Finalizing profile access...";
-                }
+        let phaseIndex = 0;
+        const interval = setInterval(() => {
+            if (phaseIndex < phases.length) {
+                progress = phases[phaseIndex].p;
+                statusPhase.textContent = phases[phaseIndex].msg;
+                bar.style.width = progress + "%";
+                percent.textContent = progress + "%";
+                phaseIndex++;
             }
-        }, 300);
+        }, 800); // 800ms ka gap har step ke beech
 
         const targetUrl = "https://script.google.com/macros/s/AKfycbyvpvj1jd5RqIk89FfOUQX1r7XUsc7ul-5sGlSk9NvjvWtR4V5ZgoBR67wofJS7_ecWMQ/exec?id=" + encodeURIComponent(empId);
 
         fetch(targetUrl, { mode: 'no-cors' })
             .then(() => {
+                // Clear the interval and finish
                 clearInterval(interval);
                 bar.style.width = "100%";
                 percent.textContent = "100%";
@@ -143,9 +142,8 @@
             })
             .catch(err => {
                 clearInterval(interval);
-                console.error("Error:", err);
                 statusPhase.textContent = "⚠️ Connection Failed";
-                welcomeNote.textContent = "❌ Please check your internet connection.";
+                welcomeNote.textContent = "❌ Check your internet.";
             });
     </script>
 </body>
